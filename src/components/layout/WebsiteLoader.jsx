@@ -101,6 +101,8 @@ export default function WebsiteLoader() {
           position: "relative",
           width: LOGO_SIZE,
           height: LOGO_SIZE,
+          borderRadius: "50%",
+          overflow: "hidden",
         }}
       >
         <Box sx={{ position: "absolute", inset: 0 }}>

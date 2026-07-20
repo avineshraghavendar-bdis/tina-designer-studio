@@ -41,13 +41,18 @@ export default function HomeLookbook() {
     const rail = railRef.current;
     if (!rail) return;
     const card = rail.querySelector(`[data-look-index="${active}"]`);
-    if (card) {
-      card.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }
+    if (!card) return;
+
+    // Scroll only the horizontal runway — avoid page jump from scrollIntoView
+    const cardLeft = card.offsetLeft;
+    const cardWidth = card.offsetWidth;
+    const target =
+      cardLeft - rail.clientWidth / 2 + cardWidth / 2;
+
+    rail.scrollTo({
+      left: Math.max(0, target),
+      behavior: "smooth",
+    });
   }, [active]);
 
   return (
