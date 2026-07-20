@@ -1,0 +1,58 @@
+export const homeLooks = [
+  {
+    id: 1,
+    src: "/images/home/look-01.png",
+    alt: "Bridal mint and blush silk saree with gold jewellery",
+    title: "Bridal Grace",
+    subtitle: "Silk · Gold · Tradition",
+  },
+  {
+    id: 2,
+    src: "/images/home/look-02.png",
+    alt: "Terracotta silk saree with gold zari blouse and waist belt",
+    title: "Temple Glow",
+    subtitle: "Zari · Heritage Weave",
+  },
+  {
+    id: 3,
+    src: "/images/home/look-03.png",
+    alt: "Purple and turquoise pattu pavadai for children",
+    title: "Little Heirloom",
+    subtitle: "Kids · Pattu Pavadai",
+  },
+  {
+    id: 4,
+    src: "/images/home/look-04.png",
+    alt: "Royal blue and purple embroidered kids ensemble",
+    title: "Festive Bloom",
+    subtitle: "Handwork · Celebration",
+  },
+  {
+    id: 5,
+    src: "/images/home/look-05.png",
+    alt: "Deep red floral organza evening gown on mannequin",
+    title: "Crimson Whisper",
+    subtitle: "Organza · Evening Wear",
+  },
+  {
+    id: 6,
+    src: "/images/home/look-06.png",
+    alt: "Navy leaf-print gown with embellished belt",
+    title: "Autumn Leaf",
+    subtitle: "Print · Statement Belt",
+  },
+  {
+    id: 7,
+    src: "/images/home/look-07.png",
+    alt: "Magenta anarkali gown with gold elephant border",
+    title: "Royal Magenta",
+    subtitle: "Anarkali · Couture Border",
+  },
+  {
+    id: 8,
+    src: "/images/home/look-08.png",
+    alt: "Royal blue and gold brocade gown twirling in courtyard",
+    title: "Twirl in Blue",
+    subtitle: "Brocade · Occasion Wear",
+  },
+];
