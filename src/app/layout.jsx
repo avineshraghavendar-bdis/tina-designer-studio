@@ -56,9 +56,12 @@ export const metadata = {
     telephone: false,
   },
   icons: {
-    icon: [{ url: siteConfig.logo, type: "image/png" }],
-    apple: [{ url: siteConfig.logo }],
-    shortcut: siteConfig.logo,
+    icon: [
+      { url: "/favicon.png?v=2", type: "image/png" },
+      { url: "/images/tina-logo.png", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png?v=2", type: "image/png" }],
+    shortcut: "/favicon.png?v=2",
   },
   manifest: "/manifest.webmanifest",
   alternates: {
