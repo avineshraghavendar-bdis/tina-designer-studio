@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -9,22 +9,28 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { routes } from "@/constants/routes";
 import StudioLogo from "@/components/brand/StudioLogo";
 
-const HEADER_YELLOW = "var(--brand-yellow)";
+const HEADER_YELLOW = "#FFD21F";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const closeMenu = () => setOpen(false);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   const navLink = (path) => ({
     color: pathname === path ? "common.white" : "rgba(255,255,255,0.88)",
@@ -100,7 +106,7 @@ export default function Header() {
             <Box
               component="nav"
               aria-label="Main navigation"
-              sx={{ display: { xs: "none", md: "flex" }, gap: 4, alignItems: "center" }}
+              sx={{ display: { xs: "none", lg: "flex" }, gap: 4, alignItems: "center" }}
             >
               {routes.map((route) => (
                 <Typography
@@ -132,7 +138,7 @@ export default function Header() {
               edge="end"
               aria-label="open menu"
               onClick={() => setOpen(true)}
-              sx={{ display: { xs: "flex", md: "none" }, color: "common.white" }}
+              sx={{ display: { xs: "flex", lg: "none" }, color: "common.black" }}
             >
               <FontAwesomeIcon icon={faBars} />
             </IconButton>
@@ -140,78 +146,124 @@ export default function Header() {
         </Container>
       </AppBar>
 
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={() => setOpen(false)}
-        PaperProps={{
-          sx: {
-            width: 280,
-            bgcolor: HEADER_YELLOW,
-            color: "common.white",
-            borderLeft: "1px solid rgba(0, 0, 0, 0.12)",
-          },
+      {open ? (
+        <Box
+          role="presentation"
+          onClick={closeMenu}
+          sx={{
+            position: "fixed",
+            inset: 0,
+            bgcolor: "rgba(0, 0, 0, 0.45)",
+            zIndex: 1400,
+            display: { xs: "block", lg: "none" },
+          }}
+        />
+      ) : null}
+
+      <Box
+        component="nav"
+        aria-label="Mobile navigation"
+        aria-hidden={!open}
+        sx={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: { xs: "min(88vw, 320px)", sm: 340 },
+          bgcolor: HEADER_YELLOW,
+          color: "#000000",
+          zIndex: 1401,
+          display: { xs: "flex", lg: "none" },
+          flexDirection: "column",
+          transform: open ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.28s ease",
+          boxShadow: open ? "0 8px 32px rgba(0,0,0,0.22)" : "none",
+          pointerEvents: open ? "auto" : "none",
+          borderLeft: "1px solid rgba(0, 0, 0, 0.12)",
         }}
+        onClick={(event) => event.stopPropagation()}
       >
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            p: 2,
+            px: 2,
+            py: 1.5,
             borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+            flexShrink: 0,
           }}
         >
-          <Typography variant="h6" sx={{ letterSpacing: "0.1em", color: "common.white" }}>
+          <Typography
+            variant="subtitle1"
+            sx={{ letterSpacing: "0.14em", color: "#000000", fontWeight: 700 }}
+          >
             Menu
           </Typography>
-          <IconButton onClick={() => setOpen(false)} aria-label="close menu" sx={{ color: "common.white" }}>
+          <IconButton onClick={closeMenu} aria-label="close menu" sx={{ color: "#000000" }}>
             <FontAwesomeIcon icon={faTimes} />
           </IconButton>
         </Box>
-        <List>
-          {routes.map((route) => (
-            <ListItem key={route.path} disablePadding>
-              <ListItemButton
+
+        <Box sx={{ flex: 1, overflowY: "auto", py: 1 }}>
+          {routes.map((route) => {
+            const isActive = pathname === route.path;
+            return (
+              <Box
+                key={route.path}
                 component={Link}
                 href={route.path}
-                onClick={() => setOpen(false)}
-                selected={pathname === route.path}
+                onClick={closeMenu}
                 sx={{
-                  py: 2,
-                  color: "common.white",
-                  "&.Mui-selected": {
-                    bgcolor: "rgba(0, 0, 0, 0.12)",
-                    borderLeft: "3px solid",
-                    borderColor: "common.black",
+                  display: "block",
+                  px: 2.5,
+                  py: 1.75,
+                  color: "#000000",
+                  textDecoration: "none",
+                  fontSize: "0.82rem",
+                  fontWeight: isActive ? 700 : 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  borderLeft: "3px solid",
+                  borderColor: isActive ? "#000000" : "transparent",
+                  bgcolor: isActive ? "rgba(0, 0, 0, 0.1)" : "transparent",
+                  "&:hover": {
+                    bgcolor: "rgba(0, 0, 0, 0.06)",
                   },
                 }}
               >
-                <ListItemText
-                  primary={route.label}
-                  primaryTypographyProps={{
-                    variant: "button",
-                    fontSize: "0.8rem",
-                    sx: { color: "common.white" },
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Box sx={{ p: 2 }}>
+                {route.label}
+              </Box>
+            );
+          })}
+        </Box>
+
+        <Box
+          sx={{
+            p: 2,
+            pt: 1.5,
+            borderTop: "1px solid rgba(0, 0, 0, 0.12)",
+            flexShrink: 0,
+          }}
+        >
           <Button
             component={Link}
             href="/contactus"
             variant="contained"
-            color="primary"
             fullWidth
-            onClick={() => setOpen(false)}
+            size="large"
+            onClick={closeMenu}
+            sx={{
+              py: 1.35,
+              bgcolor: "#000000",
+              color: "#FFFFFF",
+              "&:hover": { bgcolor: "#1a1a1a" },
+            }}
           >
             Book Consultation
           </Button>
         </Box>
-      </Drawer>
+      </Box>
     </>
   );
 }

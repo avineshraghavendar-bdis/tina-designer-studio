@@ -2,9 +2,7 @@ import { Cormorant_Garamond, Great_Vibes, Lato } from "next/font/google";
 import AosProvider from "@/components/AosProvider";
 import SiteLayout from "@/components/layout/SiteLayout";
 import WebsiteLoader from "@/components/layout/WebsiteLoader";
-import GoogleTags, {
-  GoogleTagManagerNoscript,
-} from "@/components/seo/GoogleTags";
+import GoogleTags from "@/components/seo/GoogleTags";
 import JsonLd from "@/components/seo/JsonLd";
 import ThemeRegistry from "@/components/ThemeRegistry";
 import {
@@ -133,7 +131,6 @@ export default function RootLayout({ children }) {
       className={`${displayFont.variable} ${bodyFont.variable} ${scriptFont.variable}`}
     >
       <body>
-        <GoogleTagManagerNoscript />
         <JsonLd data={[getOrganizationSchema(), getWebSiteSchema()]} />
         <GoogleTags />
         <ThemeRegistry>
