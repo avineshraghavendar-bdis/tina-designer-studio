@@ -55,11 +55,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.png?v=2", type: "image/png" },
-      { url: "/images/tina-logo.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
     ],
-    apple: [{ url: "/apple-icon.png?v=2", type: "image/png" }],
-    shortcut: "/favicon.png?v=2",
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+    shortcut: "/favicon.png",
   },
   manifest: "/manifest.webmanifest",
   alternates: {
